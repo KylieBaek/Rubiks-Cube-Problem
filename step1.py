@@ -27,6 +27,28 @@ def rotate_left():
     print(res)
 
 
+def rotate_right():
+    global n, word
+    stack = list(word)
+
+    if n == len(word):
+        print(word)
+        return
+    elif n > len(word):
+        n = n % len(word)
+
+    while n > 0:
+        n -= 1
+        alpha = stack.pop()
+        stack.insert(0, alpha)
+
+    res = ''
+
+    for x in stack:
+        res += x
+    print(res)
+
+
 if __name__ == "__main__":
     word, n, direction = map(str, input().split())
 
@@ -38,4 +60,4 @@ if __name__ == "__main__":
     else:
         n = int(n)
 
-    rotate_left()
+
