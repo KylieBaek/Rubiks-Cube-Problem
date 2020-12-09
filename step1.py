@@ -8,12 +8,6 @@ def rotate_left():
     global n, word
     q = deque(list(word))
 
-    if n == len(word):
-        print(word)
-        return
-    elif n > len(word):
-        n = n % len(word)
-
     while n > 0:
         n -= 1
         alpha = q.popleft()
@@ -30,12 +24,6 @@ def rotate_left():
 def rotate_right():
     global n, word
     stack = list(word)
-
-    if n == len(word):
-        print(word)
-        return
-    elif n > len(word):
-        n = n % len(word)
 
     while n > 0:
         n -= 1
@@ -61,6 +49,13 @@ if __name__ == "__main__":
                 n = int(n.split('-')[1])
             else:
                 n = int(n)
+
+            # word 길이보다 길거나 같은 n값 처리
+            if n == len(word):
+                print(word)
+                continue
+            elif n > len(word):
+                n = n % len(word)
 
             # 함수 호출
             if direction == 'l' or direction == 'L':
