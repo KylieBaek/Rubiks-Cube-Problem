@@ -50,14 +50,28 @@ def rotate_right():
 
 
 if __name__ == "__main__":
-    word, n, direction = map(str, input().split())
+    while True:
+        try:
+            word, n, direction = map(str, input().split())
 
-    # 음수 확인
-    chk = 0
-    if n.startswith('-'):
-        chk = 1
-        n = int(n.split('-')[1])
-    else:
-        n = int(n)
+            # 음수 확인
+            chk = 0
+            if n.startswith('-'):
+                chk = 1
+                n = int(n.split('-')[1])
+            else:
+                n = int(n)
 
-
+            # 함수 호출
+            if direction == 'l' or direction == 'L':
+                if chk == 0:
+                    rotate_left()
+                else:
+                    rotate_right()
+            elif direction == 'r' or direction == 'R':
+                if chk == 0:
+                    rotate_right()
+                else:
+                    rotate_left()
+        except:
+            break
