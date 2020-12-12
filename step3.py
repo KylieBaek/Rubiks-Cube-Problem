@@ -40,7 +40,6 @@ def rotate_front(direct, count):
     count = count % 4
     if count == 0:
         return
-
     while count > 0:
         count -= 1
         tmp_u = [g[4][2][0], g[4][2][1], g[4][2][2]]
@@ -52,6 +51,26 @@ def rotate_front(direct, count):
         g[3][0][0], g[3][1][0], g[3][2][0] = tmp_u
         g[5][0][0], g[5][0][1], g[5][0][2] = tmp_r
         g[2][0][2], g[2][1][2], g[2][2][2] = tmp_d
+
+
+def rotate_back(direct, count):
+    if direct == -1:
+        count = count * 3
+
+    count = count % 4
+    if count == 0:
+        return
+    while count > 0:
+        count -= 1
+        tmp_u = [g[4][0][0], g[4][0][1], g[4][0][2]]
+        tmp_r = [g[3][0][2], g[3][1][2], g[3][2][2]]
+        tmp_d = [g[5][2][0], g[5][2][1], g[5][2][2]]
+        tmp_l = [g[2][0][0], g[2][1][0], g[2][2][0]]
+
+        g[4][0][0], g[4][0][1], g[4][0][2] = tmp_r
+        g[3][0][2], g[3][1][2], g[3][2][2] = tmp_d
+        g[5][2][0], g[5][2][1], g[5][2][2] = tmp_l
+        g[2][0][0], g[2][1][0], g[2][2][0] = tmp_u
 
 
 if __name__ == "__main__":
@@ -104,4 +123,21 @@ if __name__ == "__main__":
                         cnt = int(x)
 
                 rotate_front(direction, cnt)
+                print_graph(method)
+
+            elif x.startswith("B"):
+                method = x
+                direction = 1
+                cnt = 1
+
+                if len(x) > 1:
+                    x = x.split("B")[1]
+                    if x.startswith("'"):
+                        direction = -1
+                        if len(x) > 1:
+                            cnt = int(x.split("'")[1])
+                    else:
+                        cnt = int(x)
+
+                rotate_back(direction, cnt)
                 print_graph(method)
