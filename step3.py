@@ -48,13 +48,8 @@ def get_condition(m):
     return direct, count
 
 
-# cube 앞면 회전
-def rotate_front(direct, count):
-    #  반시계 방향 회전일 때
-    if direct == -1:
-        count = count * 3
-
-    count = count % 4
+# CUBE 앞면 회전
+def rotate_front(count):
     if count == 0:
         return
     while count > 0:
@@ -70,11 +65,8 @@ def rotate_front(direct, count):
         g[2][0][2], g[2][1][2], g[2][2][2] = tmp_d
 
 
-def rotate_back(direct, count):
-    if direct == -1:
-        count = count * 3
-
-    count = count % 4
+# CUBE 뒷면 회전
+def rotate_back(count):
     if count == 0:
         return
     while count > 0:
@@ -91,7 +83,7 @@ def rotate_back(direct, count):
 
 
 if __name__ == "__main__":
-    # 큐브 초기 상태
+    # 초기 상태 큐브
     g = [[0] * 3 for _ in range(6)]
     # Front
     g[0] = [['O', 'O', 'O'] for _ in range(3)]
@@ -124,12 +116,24 @@ if __name__ == "__main__":
         operation = len(res)
 
         for x in res:
-            if x.startswith("F"):
-                direction, cnt = get_condition(x)
-                rotate_front(direction, cnt)
-                print_graph(x)
+            # 회전 방향, 회전 횟수 조건 설정
+            direction, cnt = get_condition(x)
+            # 반시계 방향일 경우
+            if direction == -1:
+                cnt = cnt * 3
+            cnt = cnt % 4
 
+            if x.startswith("F"):
+                rotate_front(cnt)
             elif x.startswith("B"):
-                direction, cnt = get_condition(x)
-                rotate_back(direction, cnt)
-                print_graph(x)
+                rotate_back(cnt)
+            # elif x.startswith("U"):
+            #     rotate_up(cnt)
+            # elif x.startswith("D"):
+            #     rotate_down(cnt)
+            # elif x.startswith("L"):
+            #     rotate_left(cnt)
+            # elif x.startswith("R"):
+            #     rotate_right(cnt)
+
+            print_graph(x)
