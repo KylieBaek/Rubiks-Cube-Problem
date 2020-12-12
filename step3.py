@@ -1,5 +1,6 @@
 # coding=utf-8
 # 3단계- 루빅스 큐브 구현
+import time
 
 
 # CUBE 출력
@@ -139,6 +140,8 @@ def rotate_right(count):
 
 
 if __name__ == "__main__":
+    # 프로그램 시작 시간
+    start_time = time.time()
     # 초기 상태 큐브
     g = [[0] * 3 for _ in range(6)]
     # Front
@@ -163,13 +166,14 @@ if __name__ == "__main__":
         res = input('CUBE> ')
         # 종료 조건
         if res.startswith("Q"):
-            print("경과시간: ")
+            duration = round(time.time() - start_time, 2)
+            print("경과시간: " + str(duration) + "s")
             print("조작갯수: " + str(operation))
             print("큐브를 종료합니다...")
             break
 
         res = list(map(str, res.split()))
-        operation = len(res)
+        operation += len(res)
 
         for x in res:
             # 회전 방향, 회전 횟수 조건 설정
