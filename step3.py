@@ -2,6 +2,7 @@
 # 3단계- 루빅스 큐브 구현
 import time
 import copy
+import random
 
 
 # CUBE 출력
@@ -140,6 +141,16 @@ def rotate_right(count):
         g[1][0][0], g[1][1][0], g[1][2][0] = tmp_u
 
 
+# CUBE 무작위 섞기
+def rotate_random():
+    rotate_right(random.randrange(1, 4))
+    rotate_left(random.randrange(1, 4))
+    rotate_up(random.randrange(1, 4))
+    rotate_down(random.randrange(1, 4))
+    rotate_front(random.randrange(1, 4))
+    rotate_back(random.randrange(1, 4))
+
+
 if __name__ == "__main__":
     # 프로그램 시작 시간
     start_time = time.time()
@@ -176,6 +187,11 @@ if __name__ == "__main__":
             print("조작갯수: " + str(operation))
             print("큐브를 종료합니다...")
             break
+
+        if res == "mix":
+            rotate_random()
+            print_graph("무작위로 큐브 섞기!!")
+            continue
 
         res = list(map(str, res.split()))
 
