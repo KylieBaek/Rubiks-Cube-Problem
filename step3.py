@@ -123,6 +123,21 @@ def rotate_left(count):
         g[1][0][2], g[1][1][2], g[1][2][2] = tmp_d
 
 
+# CUBE 오른쪽면 회전
+def rotate_right(count):
+    while count > 0:
+        count -= 1
+        tmp_u = [g[4][0][2], g[4][1][2], g[4][2][2]]
+        tmp_f = [g[0][0][2], g[0][1][2], g[0][2][2]]
+        tmp_d = [g[5][0][2], g[5][1][2], g[5][2][2]]
+        tmp_b = [g[1][0][0], g[1][1][0], g[1][2][0]]
+
+        g[4][0][2], g[4][1][2], g[4][2][2] = tmp_f
+        g[0][0][2], g[0][1][2], g[0][2][2] = tmp_d
+        g[5][0][2], g[5][1][2], g[5][2][2] = tmp_b
+        g[1][0][0], g[1][1][0], g[1][2][0] = tmp_u
+
+
 if __name__ == "__main__":
     # 초기 상태 큐브
     g = [[0] * 3 for _ in range(6)]
@@ -178,8 +193,8 @@ if __name__ == "__main__":
                 rotate_down(cnt)
             elif x.startswith("L"):
                 rotate_left(cnt)
-            # elif x.startswith("R"):
-            #     rotate_right(cnt)
+            elif x.startswith("R"):
+                rotate_right(cnt)
 
             # 회전된 CUBE 출력
             print_graph(x)
