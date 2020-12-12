@@ -78,6 +78,36 @@ def rotate_back(count):
         g[2][0][0], g[2][1][0], g[2][2][0] = tmp_u
 
 
+# CUBE 윗면 회전
+def rotate_up(count):
+    while count > 0:
+        count -= 1
+        tmp_l = g[2][0]
+        tmp_f = g[0][0]
+        tmp_r = g[3][0]
+        tmp_b = g[1][0]
+
+        g[2][0] = tmp_f
+        g[0][0] = tmp_r
+        g[3][0] = tmp_b
+        g[1][0] = tmp_l
+
+
+# CUBE 아랫면 회전
+def rotate_down(count):
+    while count > 0:
+        count -= 1
+        tmp_l = g[2][2]
+        tmp_f = g[0][2]
+        tmp_r = g[3][2]
+        tmp_b = g[1][2]
+
+        g[2][2] = tmp_b
+        g[0][2] = tmp_l
+        g[3][2] = tmp_f
+        g[1][2] = tmp_r
+
+
 if __name__ == "__main__":
     # 초기 상태 큐브
     g = [[0] * 3 for _ in range(6)]
@@ -127,10 +157,10 @@ if __name__ == "__main__":
                 rotate_front(cnt)
             elif x.startswith("B"):
                 rotate_back(cnt)
-            # elif x.startswith("U"):
-            #     rotate_up(cnt)
-            # elif x.startswith("D"):
-            #     rotate_down(cnt)
+            elif x.startswith("U"):
+                rotate_up(cnt)
+            elif x.startswith("D"):
+                rotate_down(cnt)
             # elif x.startswith("L"):
             #     rotate_left(cnt)
             # elif x.startswith("R"):
