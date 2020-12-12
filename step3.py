@@ -31,6 +31,23 @@ def print_graph(m):
     print()
 
 
+# CUBE 회전 조건 반환 함수
+def get_condition(m):
+    direct = 1
+    count = 1
+
+    # 회전 조건 4가지 예: F or F' or F'2 or F2
+    if len(m) > 1:
+        m = m.split(m[0])[1]
+        if m.startswith("'"):
+            direct = -1
+            if len(m) > 1:
+                count = int(m.split("'")[1])
+        else:
+            count = int(m)
+    return direct, count
+
+
 # cube 앞면 회전
 def rotate_front(direct, count):
     #  반시계 방향 회전일 때
@@ -108,36 +125,11 @@ if __name__ == "__main__":
 
         for x in res:
             if x.startswith("F"):
-                method = x
-                direction = 1
-                cnt = 1
-
-                # 회전 조건 4가지: F or F' or F'2 or F2
-                if len(x) > 1:
-                    x = x.split("F")[1]
-                    if x.startswith("'"):
-                        direction = -1
-                        if len(x) > 1:
-                            cnt = int(x.split("'")[1])
-                    else:
-                        cnt = int(x)
-
+                direction, cnt = get_condition(x)
                 rotate_front(direction, cnt)
-                print_graph(method)
+                print_graph(x)
 
             elif x.startswith("B"):
-                method = x
-                direction = 1
-                cnt = 1
-
-                if len(x) > 1:
-                    x = x.split("B")[1]
-                    if x.startswith("'"):
-                        direction = -1
-                        if len(x) > 1:
-                            cnt = int(x.split("'")[1])
-                    else:
-                        cnt = int(x)
-
+                direction, cnt = get_condition(x)
                 rotate_back(direction, cnt)
-                print_graph(method)
+                print_graph(x)
