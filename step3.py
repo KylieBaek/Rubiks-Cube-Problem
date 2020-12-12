@@ -50,8 +50,6 @@ def get_condition(m):
 
 # CUBE 앞면 회전
 def rotate_front(count):
-    if count == 0:
-        return
     while count > 0:
         count -= 1
         tmp_u = [g[4][2][0], g[4][2][1], g[4][2][2]]
@@ -67,8 +65,6 @@ def rotate_front(count):
 
 # CUBE 뒷면 회전
 def rotate_back(count):
-    if count == 0:
-        return
     while count > 0:
         count -= 1
         tmp_u = [g[4][0][0], g[4][0][1], g[4][0][2]]
@@ -121,7 +117,11 @@ if __name__ == "__main__":
             # 반시계 방향일 경우
             if direction == -1:
                 cnt = cnt * 3
+
             cnt = cnt % 4
+            if cnt == 0:
+                print_graph(x)
+                continue
 
             if x.startswith("F"):
                 rotate_front(cnt)
