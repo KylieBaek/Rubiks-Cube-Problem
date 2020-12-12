@@ -28,36 +28,30 @@ def print_graph(m):
         for j in range(3):
             print(g[5][i][j], end='')
         print()
+    print()
 
 
 # cube 앞면 회전
 def rotate_front(direct, count):
-    # 시계 방향
-    if direct == 1:
-        while count > 0:
-            count -= 1
-            tmp_u = [g[4][2][0], g[4][2][1], g[4][2][2]]
-            tmp_r = [g[3][0][0], g[3][1][0], g[3][2][0]]
-            tmp_d = [g[5][0][0], g[5][0][1], g[5][0][2]]
-            tmp_l = [g[2][0][2], g[2][1][2], g[2][2][2]]
+    #  반시계 방향 회전일 때
+    if direct == -1:
+        count = count * 3
 
-            g[4][2][0], g[4][2][1], g[4][2][2] = tmp_l
-            g[3][0][0], g[3][1][0], g[3][2][0] = tmp_u
-            g[5][0][0], g[5][0][1], g[5][0][2] = tmp_r
-            g[2][0][2], g[2][1][2], g[2][2][2] = tmp_d
-    # 반시계 방향
-    else:
-        while count > 0:
-            count -= 1
-            tmp_u = [g[4][2][0], g[4][2][1], g[4][2][2]]
-            tmp_r = [g[3][0][0], g[3][1][0], g[3][2][0]]
-            tmp_d = [g[5][0][0], g[5][0][1], g[5][0][2]]
-            tmp_l = [g[2][0][2], g[2][1][2], g[2][2][2]]
+    count = count % 4
+    if count == 0:
+        return
 
-            g[4][2][0], g[4][2][1], g[4][2][2] = tmp_r
-            g[3][0][0], g[3][1][0], g[3][2][0] = tmp_d
-            g[5][0][0], g[5][0][1], g[5][0][2] = tmp_l
-            g[2][0][2], g[2][1][2], g[2][2][2] = tmp_u
+    while count > 0:
+        count -= 1
+        tmp_u = [g[4][2][0], g[4][2][1], g[4][2][2]]
+        tmp_r = [g[3][0][0], g[3][1][0], g[3][2][0]]
+        tmp_d = [g[5][0][0], g[5][0][1], g[5][0][2]]
+        tmp_l = [g[2][0][2], g[2][1][2], g[2][2][2]]
+
+        g[4][2][0], g[4][2][1], g[4][2][2] = tmp_l
+        g[3][0][0], g[3][1][0], g[3][2][0] = tmp_u
+        g[5][0][0], g[5][0][1], g[5][0][2] = tmp_r
+        g[2][0][2], g[2][1][2], g[2][2][2] = tmp_d
 
 
 if __name__ == "__main__":
@@ -93,15 +87,11 @@ if __name__ == "__main__":
         res = list(map(str, res.split()))
         operation = len(res)
 
-        # 회전 조건 변수 선언
-        direction = 1
-        cnt = 1
-        print(res)
-
         for x in res:
             if x.startswith("F"):
                 method = x
                 direction = 1
+                cnt = 1
 
                 # 회전 조건 4가지: F or F' or F'2 or F2
                 if len(x) > 1:
