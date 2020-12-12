@@ -1,6 +1,7 @@
 # coding=utf-8
 # 3단계- 루빅스 큐브 구현
 import time
+import copy
 
 
 # CUBE 출력
@@ -160,9 +161,13 @@ if __name__ == "__main__":
     # 초기 상태 큐브 출력
     print_graph("")
     operation = 0
+    init_g = copy.deepcopy(g)
+    init_chk = 0
 
     # CUBE 입력 받기
     while True:
+        if init_chk == 1:
+            break
         res = input('CUBE> ')
         # 종료 조건
         if res.startswith("Q"):
@@ -173,9 +178,10 @@ if __name__ == "__main__":
             break
 
         res = list(map(str, res.split()))
-        operation += len(res)
 
         for x in res:
+            # 조작 갯수 카운트
+            operation += 1
             # 회전 방향, 회전 횟수 조건 설정
             direction, cnt = get_condition(x)
             # 반시계 방향일 경우
@@ -202,3 +208,9 @@ if __name__ == "__main__":
 
             # 회전된 CUBE 출력
             print_graph(x)
+
+            # 모든 면을 맞추면 종료
+            if init_g == g:
+                print("축하합니다! 모든 면을 맞추셨어요. 큐브를 종료합니다...")
+                init_chk = 1
+                break
