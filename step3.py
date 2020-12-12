@@ -1,8 +1,10 @@
 # coding=utf-8
 # 3단계- 루빅스 큐브 구현
 
+
 # CUBE 출력
-def print_graph():
+def print_graph(m):
+    print(m)
     # up 출력
     for i in range(3):
         print('      ', end='')
@@ -26,8 +28,36 @@ def print_graph():
         for j in range(3):
             print(g[5][i][j], end='')
         print()
-#
-# def rotate_up():
+
+
+# cube 앞면 회전
+def rotate_front(direct, count):
+    # 시계 방향
+    if direct == 1:
+        while count > 0:
+            count -= 1
+            tmp_u = [g[4][2][0], g[4][2][1], g[4][2][2]]
+            tmp_r = [g[3][0][0], g[3][1][0], g[3][2][0]]
+            tmp_d = [g[5][0][0], g[5][0][1], g[5][0][2]]
+            tmp_l = [g[2][0][2], g[2][1][2], g[2][2][2]]
+
+            g[4][2][0], g[4][2][1], g[4][2][2] = tmp_l
+            g[3][0][0], g[3][1][0], g[3][2][0] = tmp_u
+            g[5][0][0], g[5][0][1], g[5][0][2] = tmp_r
+            g[2][0][2], g[2][1][2], g[2][2][2] = tmp_d
+    # 반시계 방향
+    else:
+        while count > 0:
+            count -= 1
+            tmp_u = [g[4][2][0], g[4][2][1], g[4][2][2]]
+            tmp_r = [g[3][0][0], g[3][1][0], g[3][2][0]]
+            tmp_d = [g[5][0][0], g[5][0][1], g[5][0][2]]
+            tmp_l = [g[2][0][2], g[2][1][2], g[2][2][2]]
+
+            g[4][2][0], g[4][2][1], g[4][2][2] = tmp_r
+            g[3][0][0], g[3][1][0], g[3][2][0] = tmp_d
+            g[5][0][0], g[5][0][1], g[5][0][2] = tmp_l
+            g[2][0][2], g[2][1][2], g[2][2][2] = tmp_u
 
 
 if __name__ == "__main__":
@@ -47,8 +77,8 @@ if __name__ == "__main__":
     g[5] = [['R', 'R', 'R'] for _ in range(3)]
 
     # 초기 상태 큐브 출력
-    print_graph()
-    count = 0
+    print_graph("")
+    operation = 0
 
     # CUBE 입력 받기
     while True:
@@ -56,12 +86,32 @@ if __name__ == "__main__":
         # 종료 조건
         if res.startswith("Q"):
             print("경과시간: ")
-            print("조작갯수: "+str(count))
+            print("조작갯수: " + str(operation))
             print("큐브를 종료합니다...")
             break
 
         res = list(map(str, res.split()))
-        count = len(res)
+        operation = len(res)
 
+        # 회전 조건 변수 선언
+        direction = 1
+        cnt = 1
+        print(res)
 
+        for x in res:
+            if x.startswith("F"):
+                method = x
+                direction = 1
 
+                # 회전 조건 4가지: F or F' or F'2 or F2
+                if len(x) > 1:
+                    x = x.split("F")[1]
+                    if x.startswith("'"):
+                        direction = -1
+                        if len(x) > 1:
+                            cnt = int(x.split("'")[1])
+                    else:
+                        cnt = int(x)
+
+                rotate_front(direction, cnt)
+                print_graph(method)
